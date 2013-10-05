@@ -106,3 +106,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# Source all scripts in ~/.bashrc.d ending with '.bashrc'
+if [ -d ~/.bashrc.d ]; then
+  for rc in $(find ~/.bashrc.d -maxdepth 1 -name '*.bashrc' -type f); do
+    source $rc
+  done
+fi
+
