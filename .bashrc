@@ -106,6 +106,17 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# Add pathmunge utility function
+pathmunge () {
+  if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
+    if [ "$2" = "after" ] ; then
+      PATH=$PATH:$1
+    else
+      PATH=$1:$PATH
+    fi
+  fi
+}
+
 # Source all scripts in ~/.bashrc.d ending with '.bashrc'
 if [ -d ~/.bashrc.d ]; then
   for rc in $(find ~/.bashrc.d -maxdepth 1 -name '*.bashrc' -type f); do
